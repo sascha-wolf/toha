@@ -1,0 +1,28 @@
+{{ define "header" }}
+<link rel="stylesheet" href="/assets/css/legal.css" />
+{{ end }}
+
+{{ define "navbar" }}
+{{ partial "navbar-2.html" (dict "baseURL" .Site.BaseURL "title" .Site.Title "hasToggleButton" false "navBrandURL"  "/posts") }}
+{{ end }}
+
+{{ define "content" }}
+<div class="container p-0 read-area">
+  <!--Content Start-->
+  <div class="page-content">
+    <div class="title">
+      <h1>{{ .Page.Title }}</h1>
+    </div>
+
+    <div class="post-content" id="post-content">
+      {{ .Page.Content }}
+    </div>
+  </div>
+  {{ end }}
+
+
+  {{ define "scripts" }}
+  {{ if .Params.math }}
+  {{ partial "math.html" . }}
+  {{ end }}
+  {{ end }}
