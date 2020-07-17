@@ -1,0 +1,102 @@
+{{ define "header" }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/atom-one-dark.min.css" />
+<link rel="stylesheet" href="/assets/css/single.css" />
+<link rel="stylesheet" href="/assets/css/talk.css" />
+{{ end }}
+
+{{ define "navbar" }}
+{{ partial "navbar-2.html" (dict "baseURL" .Site.BaseURL "title" .Site.Title "hasToggleButton" false "navBrandURL"  "/posts") }}
+{{ end }}
+
+{{ define "content" }}
+<div class="container p-0 read-area">
+  <!--Hero Area-->
+  <div class="hero-area col-sm-12"
+    style='background-image: url({{ strings.TrimSuffix "/" .Site.BaseURL }}{{ partial "helpers/get-hero.html" . }});'>
+  </div>
+
+  <!--Content Start-->
+  <div class="page-content">
+    <div class="author-profile ml-auto align-self-lg-center">
+      <img class="rounded-circle" src='{{ partial "helpers/get-author-image.html" . }}' />
+      <h5 class="author-name">{{ partial "helpers/get-author-name.html" . }}</h5>
+      <p>{{ .Page.Date.Format "January 2, 2006" }}</p>
+    </div>
+
+    <div class="title">
+      <h1>{{ .Page.Title }}</h1>
+    </div>
+
+    <div class="post-meta">
+      <div>
+        <div class="date">
+          <span class="posted-on">
+            <i class="fas fa-calendar"></i>
+            <time datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'>
+              {{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
+            </time>
+          </span>
+          <span class="location">
+            <i class="fas fa-map-marker"></i>
+            {{ .Page.Params.Location }}
+          </span>
+          {{ if .Page.Params.EventLink }}
+          <span class="event-link">
+            <i class="fas fa-link"></i>
+            <a href="{{ .Page.Params.EventLink }}">{{ .Page.Params.EventName }}</a>
+          </span>
+          {{ end }}
+        </div>
+
+        <!-- Link to slides -->
+        {{ if .Page.Params.Slides }}
+        <div class="slide-links">
+          <i class="fas fa-link"></i>
+          {{- range $index, $el := .Page.Params.Slides -}}
+          {{- if gt $index 0 }}
+          <span class="separator">•</span>
+          {{- end }}
+          {{ . | markdownify }}
+          <!-- <a href="{{ ( print "tags/" ( . | urlize ) ) | relLangURL }}">{{ . }}</a> -->
+          {{- end -}}
+        </div>
+        {{ end }}
+      </div>
+    </div>
+
+    <div class="post-content" id="post-content">
+      {{ .Page.Content }}
+    </div>
+
+    <!--- Improve this page button --->
+    {{ if .Site.Params.GitRepo }}
+    <div class="btn-improve-page">
+      <a href="{{ .Site.Params.GitRepo }}/edit/master/content/{{ .File.Path }}">
+        <i class="fas fa-code-branch"></i>
+        Improve This Page
+      </a>
+    </div>
+    {{ end }}
+
+    <!---Next and Previous Navigator -->
+    <hr />
+    {{ partial "next-prev-navigator.html" . }}
+    <hr />
+    <!-- Add Disqus forum  -->
+    {{ if .Site.DisqusShortname }}
+    {{ partial "disqus.html" . }}
+    {{ end }}
+  </div>
+  {{ end }}
+
+
+  {{ define "scripts" }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
+  <script src="/assets/js/single.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  {{ if .Params.math }}
+  {{ partial "math.html" . }}
+  {{ end }}
+  {{ end }}

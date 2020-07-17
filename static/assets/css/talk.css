@@ -1,0 +1,17 @@
+.post-meta {
+  display: flex;
+  justify-content: center;
+}
+
+.post-meta i {
+  text-align: center;
+  width: 1.6rem;
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+.post-meta .date .posted-on,
+.post-meta .date .location {
+  margin-left: 0;
+  margin-right: 1.5rem;
+}
