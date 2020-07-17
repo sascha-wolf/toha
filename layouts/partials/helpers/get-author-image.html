@@ -1,7 +1,10 @@
 {{ $authorImage:= "/assets/images/default-avatar.png"}}
-{{ if .Site.Data.site.author}}
+{{ if .Site.Params.author }}
+    {{ $authorImage = .Site.Params.author.image | relURL }}
+{{ end }}
+{{ if .Site.Data.site.author }}
     {{ $authorImage = .Site.Data.site.author.image | relURL }}
-{{ end}}
+{{ end }}
 {{ if eq (printf "%T" .Params.author ) "maps.Params" }}
     {{ with .Params.author }}
         {{ if .image }}
